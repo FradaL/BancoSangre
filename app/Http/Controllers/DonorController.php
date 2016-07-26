@@ -58,7 +58,6 @@ class DonorController extends Controller
 
     public function store(Requests\CreateDonorRequest $request)
     {
-        $newDonor = new Donor;
         if ($request['age'] > $this->edadMin and $request['age'] < $this->edadMax ){
             if($request['weight'] > $this->pesoMin){
                 if($request['disease'] == 'NO'){
@@ -70,25 +69,11 @@ class DonorController extends Controller
         }
 
         $sequence = DB::getSequence();
-        $newDonor->id = $sequence->nextValue('donors_id_seq');
-        $newDonor->first_name = $request->input('first_name');
-        $newDonor->second_name = $request->input('second_name');
-        $newDonor->first_lastname = $request->input('first_lastname');
-        $newDonor->second_lastname = $request->input('second_lastname');
-        $newDonor->phone = $request->input('phone');
-        $newDonor->email = $request->input('email');
-        $newDonor->dpi = $request->input('dpi');
-        $newDonor->Civil_Status = $request->input('Civil_Status');
-        $newDonor->gender = $request->input('gender');
-        $newDonor->age = $request->input('age');
-        $newDonor->BloodType_id = $request->input('BloodType_id');
-        $newDonor->weight = $request->input('weight');
-        $newDonor->disease = $request->input('disease');
-        $newDonor->tattoo = $request->input('tattoo');
-        $newDonor->Status_Check = $this->aux;
-        $newDonor->status_delete = 'Activo';
-        $newDonor->save();
-        Session::flash('Sucesful', '¡El Donante con DPI No.: ' .  $newDonor->dpi . ' Ha sido Creado!');
+        $request['id'] = $sequence->nextValue('donors_id_seq');
+        $request['Status_Check'] = $this->aux;
+        $request['status_delete'] = 'Activo';
+        Donor::create($request->all());
+        Session::flash('Sucesful', '¡El Donante con DPI No.: ' .  $request->dpi . ' Ha sido Creado!');
         return redirect()->route('list.donor');
     }
 

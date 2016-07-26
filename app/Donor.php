@@ -12,8 +12,7 @@ class Donor extends Model
 
     protected $table = 'Donors';
     public $sequence = 'donors_id_seq';
-    protected $fillable = ['id', 'first_name', 'second_name', 'first_lastname', 'second_lastname', 'dpi', 'Civil_Status', 'gender', 'phone', 'age', 'BloodType_id', 'weight', 'disease', 'tattoo', 'Status_Check'];
-
+    protected $fillable = ['id', 'first_name', 'second_name', 'first_lastname', 'second_lastname', 'phone', 'email', 'dpi', 'Civil_Status', 'gender', 'age', 'BloodType_id', 'weight', 'disease', 'tattoo', 'Status_Check', 'status_delete'];
 
     public function bloodtypes()
     {
